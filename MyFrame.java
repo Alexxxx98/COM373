@@ -1,30 +1,26 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MyFrame extends JFrame 
 {
     
     public MyFrame()
     {
-        
-    MyControlPanel myPane = new MyControlPanel();
-    this.add(myPane);
-    myPane.setLayout(null);
-
-    JMenuBar theMenu = new JMenuBar();
-    JMenu Account = new JMenu("Account Type");
-
-    JMenuItem Current = new JMenuItem("Current");
-    JMenuItem Savings = new JMenuItem("Savings");
-
-
-    Account.add(Current);
-    Account.add(Savings);
-
-    theMenu.add(Account);
-    this.setJMenuBar(theMenu);
+    this.setTitle("Account Simulation");
+    this.setSize(1000,600);
+    this.setLocationRelativeTo(null);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    JPanel main = new JPanel();
+    main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+ 
+   
+    main.add(new MyControlPanel());
+    main.add(new MyDrawingPanel());
+    this.add(main);
+    this.setVisible(true);
 
     } 
 }
