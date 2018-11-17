@@ -15,14 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-
 
     public class MyControlPanel extends JPanel
     {
@@ -37,6 +29,7 @@ import org.jfree.data.general.DefaultPieDataset;
     JTextField min;
     JTextField maxD;
     JTextField minD;
+    JLabel initBal;
     JLabel maxBal;
     JLabel minBal;
     JLabel maxDate;
@@ -64,6 +57,7 @@ import org.jfree.data.general.DefaultPieDataset;
         protected JComponent getHeader() 
         {
         topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
         theMenu = new JMenuBar();
         Account = new JMenu("Account Type");
 
@@ -82,7 +76,9 @@ import org.jfree.data.general.DefaultPieDataset;
         Account.add(Savings);
 
         theMenu.add(Account);
-        topPanel.add(theMenu);
+        topPanel.add(theMenu, BorderLayout.WEST);
+        
+        topPanel.setBackground(Color.YELLOW);
         return topPanel;
         } 
 
@@ -91,18 +87,24 @@ import org.jfree.data.general.DefaultPieDataset;
            leftPanel = new JPanel();
            leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
-           initialBalance = new JButton("Enter initial Balance");
-           balance = new JTextField(15);
+           leftPanel.add(Box.createRigidArea(new Dimension(5,50)));
+           initBal = new JLabel("Please enter initial Balance of account");
+           balance = new JTextField(10);
+           initialBalance = new JButton("Submit");          
            balance.setMaximumSize(balance.getPreferredSize());
            simulate = new JButton("Start Simulation");    
            stopSim = new JButton("Stop Simulation");
-
+           
+           leftPanel.add(initBal);
+           leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
+           leftPanel.add(balance);      
+           leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
            leftPanel.add(initialBalance);
-           leftPanel.add(balance);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
            leftPanel.add(simulate);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
            leftPanel.add(stopSim);
+           leftPanel.setBackground(Color.YELLOW);
            return leftPanel;
         }
 
@@ -114,7 +116,7 @@ import org.jfree.data.general.DefaultPieDataset;
         maxBal = new JLabel("Maxium Balance During Simulation");
         minBal = new JLabel("Minimum Balance During Simulation");
         maxDate = new JLabel("Date Occured");
-        minDate = new JLabel("Date OCcured");
+        minDate = new JLabel("Date Occured");
         
         max = new JTextField(15);
         max.setMaximumSize(max.getPreferredSize());
@@ -135,26 +137,14 @@ import org.jfree.data.general.DefaultPieDataset;
         rightPanel.add(min);
         rightPanel.add(minDate);
         rightPanel.add(minD);  
-
+        rightPanel.setBackground(Color.YELLOW);
         return rightPanel;
         }
 
         protected JComponent getCenter()
         {
         centerPanel = new JPanel();
-        centerPanel.add(Box.createRigidArea(new Dimension(5,30)));
-        DefaultCategoryDataset dataset= new DefaultCategoryDataset();
-        double Balance = 1.0;
-        dataset.setValue(new Double(Balance), "Values", "Months");
-
-        JFreeChart chart = ChartFactory.createLineChart("Balance History", "TimeScale", "Balance", dataset);
-        chart.setBackgroundPaint(Color.RED);
-        ChartPanel frame = new ChartPanel(chart);
-        frame.setPreferredSize(new Dimension(400, 300));
-        //frame.setVisible(true);
-        centerPanel.add(frame);
-        //centerPanel.validate();
-
+        centerPanel.setBackground(Color.YELLOW);
         return centerPanel;
         }
 }

@@ -10,42 +10,47 @@ public class MyDrawingPanel extends JPanel
     JLabel transList;
     JLabel errors;
     JTextField upBalance;
-    JTextField trans;
-    JTextField error;
+    JTextArea trans;
+    JTextArea error;
     
     public MyDrawingPanel()
     {
     setLayout(new BorderLayout());
     //this.add(getHeader(), BorderLayout.PAGE_START);
-    this.add(getLeft(), BorderLayout.LINE_START);
-    //this.add(getCenter(), BorderLayout.CENTER);
+    //this.add(getLeft(), BorderLayout.LINE_START);
+    this.add(getCenter(), BorderLayout.CENTER);
     //this.add(getRight(), BorderLayout.LINE_END);
     }
     
-    protected JComponent getLeft()
+    protected JComponent getCenter()
     {
     
     leftPanel = new JPanel();
-    leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+    //leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
     
     upBal = new JLabel("Updated Account Balance");
-    upBalance = new JTextField(15);
+    upBalance = new JTextField(10);
     upBalance.setMaximumSize(upBalance.getPreferredSize());
     leftPanel.add(upBal);
     leftPanel.add(upBalance);
     
     transList = new JLabel("List of Transactions");
-    trans = new JTextField(15);
-    trans.setMaximumSize(trans.getPreferredSize());
+    trans = new JTextArea(10,15);
+    trans.setLineWrap(true);
+    trans.setWrapStyleWord(true);
+    JScrollPane scrollPane = new JScrollPane(trans);
     leftPanel.add(transList);
-    leftPanel.add(trans);
+    leftPanel.add(scrollPane);
     
     errors = new JLabel("Error Messages Produced");
-    error = new JTextField(15);
-    error.setMaximumSize(error.getPreferredSize());
+    error = new JTextArea(10,15);
+    error.setLineWrap(true);
+    error.setWrapStyleWord(true);
+    JScrollPane scrollPane2 = new JScrollPane(error);
     leftPanel.add(errors);
-    leftPanel.add(error);
-     
+    leftPanel.add(scrollPane2);
+    
+    leftPanel.setBackground(Color.YELLOW);
     return leftPanel;
     }
 }

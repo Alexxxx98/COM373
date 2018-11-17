@@ -1,22 +1,31 @@
 
+import java.text.ParseException;
+
+
 
 public class Accounts 
 {
-
-    public static void main(String[] args) 
+    public double balance;
+    public int numWithdrawals;
+    private double interest;
+    public int size;
+     
+    public Accounts(double balance, int numWithdrawals)throws ParseException
     {
-        Accounts a1 = new Accounts();
+    this.balance = balance;
+ 
+    this.numWithdrawals = numWithdrawals;
+    }
+     
+    public static void main(String[] args) throws ParseException 
+    {
+        //Accounts a1 = new Accounts();
+        //Savings s1 = new Savings(1.0, 1, 1);
+        MyFrame frame = new MyFrame();
         
-        //MyFrame frame = new MyFrame();
+
+
         
-        //frame.setVisible(true);
-        //frame.setSize(600,400);
-        
-        MyFrame2 frame1 = new MyFrame2();
-        
-        frame1.setVisible(true);
-        frame1.setSize(600,400);
-      
-        
+    
     }
 }
