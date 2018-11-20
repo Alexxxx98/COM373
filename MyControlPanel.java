@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.BoxLayout;
@@ -7,6 +9,8 @@ import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,7 +50,26 @@ import javax.swing.JMenuItem;
     JMenuItem Current;
     JMenuItem Savings;
     
-    
+    int secondsPassed = 0;
+    Timer timer = new Timer();
+    MyControlPanel c;
+    TimerTask task = new TimerTask()
+    {
+        public void run()
+        {
+            secondsPassed++;
+            System.out.println("Seconds Passed: " + secondsPassed); 
+        }
+    };
+    public void start()
+        {
+            timer.scheduleAtFixedRate(task, 1000, 1000);
+        }
+    public void end()
+    {
+        timer.cancel();
+    }
+   
         public MyControlPanel()
         {
         setLayout(new BorderLayout());
@@ -56,7 +79,7 @@ import javax.swing.JMenuItem;
         this.add(getRight(), BorderLayout.LINE_END);
         //this.add(getBottom(), BorderLayout.PAGE_END); 
         }
-
+        
         protected JComponent getHeader() 
         {
         topPanel = new JPanel();
@@ -110,8 +133,23 @@ import javax.swing.JMenuItem;
            initialBalanceCurr = new JButton("Submit");
            initialBalanceSave = new JButton("Submit");
            balance.setMaximumSize(balance.getPreferredSize());
-           simulate = new JButton("Start Simulation");    
+           simulate = new JButton("Start Simulation");
+           simulate.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent e) 
+                {   
+                    c = new MyControlPanel();
+                    c.start();
+                }
+            });
            stopSim = new JButton("Stop Simulation");
+           stopSim.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent e) 
+                {   
+                    c.end();
+                }
+            });
            
            leftPanel.add(initBal);
            leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
