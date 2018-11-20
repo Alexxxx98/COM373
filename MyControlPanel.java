@@ -5,6 +5,8 @@ import javax.swing.BoxLayout;
 
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,7 +36,8 @@ import javax.swing.JMenuItem;
     JLabel minBal;
     JLabel maxDate;
     JLabel minDate;
-    JButton initialBalance;
+    JButton initialBalanceCurr;
+    JButton initialBalanceSave;
     JButton simulate;
     JButton stopSim;
     JButton showBal;
@@ -62,15 +65,29 @@ import javax.swing.JMenuItem;
         Account = new JMenu("Account Type");
 
         Current = new JMenuItem("Current");
-        /*Current.addActionListener(new ActionListener()
+        Current.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) 
-             {
-                 System.out.println("uhfdaoiuh");         
-             }
-        });*/
+            {
+            initBal.setVisible(true);
+            balance.setVisible(true);
+            initialBalanceCurr.setVisible(true);
+            initialBalanceSave.setVisible(false);
+            }
+        });
 
         Savings = new JMenuItem("Savings");
+        Savings.addActionListener(new ActionListener()
+        {  
+            public void actionPerformed(ActionEvent e) 
+            {
+            initBal.setVisible(true);
+            balance.setVisible(true);
+            initialBalanceSave.setVisible(true);
+            initialBalanceCurr.setVisible(false);
+            }
+        });
+        
 
         Account.add(Current);
         Account.add(Savings);
@@ -90,7 +107,8 @@ import javax.swing.JMenuItem;
            leftPanel.add(Box.createRigidArea(new Dimension(5,50)));
            initBal = new JLabel("Please enter initial Balance of account");
            balance = new JTextField(10);
-           initialBalance = new JButton("Submit");          
+           initialBalanceCurr = new JButton("Submit");
+           initialBalanceSave = new JButton("Submit");
            balance.setMaximumSize(balance.getPreferredSize());
            simulate = new JButton("Start Simulation");    
            stopSim = new JButton("Stop Simulation");
@@ -99,12 +117,19 @@ import javax.swing.JMenuItem;
            leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
            leftPanel.add(balance);      
            leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
-           leftPanel.add(initialBalance);
+           leftPanel.add(initialBalanceCurr);
+           leftPanel.add(initialBalanceSave);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
            leftPanel.add(simulate);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
            leftPanel.add(stopSim);
            leftPanel.setBackground(Color.YELLOW);
+           initBal.setVisible(false);
+           balance.setVisible(false);
+           initialBalanceCurr.setVisible(false);
+           initialBalanceSave.setVisible(false);
+           
+           
            return leftPanel;
         }
 
