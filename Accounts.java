@@ -5,27 +5,43 @@ import java.text.ParseException;
 
 public class Accounts 
 {
-    public double balance;
-    public int numWithdrawals;
+    private double balance;
+    private int date;
+    private int numWithdrawals = 0;
     private double interest;
-    public int size;
-     
-    public Accounts(double balance, int numWithdrawals)throws ParseException
+    private int size = 0;
+    
+    
+
+    public Accounts(double balance, int date, int numWithdrawals)throws ParseException
     {
     this.balance = balance;
- 
+    this.date = date;
     this.numWithdrawals = numWithdrawals;
     }
-     
+    
+    public double getBalance()
+    {
+        return this.balance;
+    }
+    
+    public double getDate()
+    {
+        return this.date;
+    }
+    
+    public double getNumWithdrawals()
+    {
+        return this.numWithdrawals;
+    }
+    public int getSize()
+    {
+        return this.size;
+    }
     public static void main(String[] args) throws ParseException 
     {
-        //Accounts a1 = new Accounts();
-        //Savings s1 = new Savings(1.0, 1, 1);
         MyFrame frame = new MyFrame();
-        
 
-
-        
     
     }
 }

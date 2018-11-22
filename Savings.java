@@ -8,21 +8,23 @@
  {
      private Accounts[] savingsAccount;
      
-     public Savings(double balance, int numWithdrawals) throws ParseException
-     {
-         super(balance, numWithdrawals);
-         this.savingsAccount = new Accounts[10];
-         this.numWithdrawals = 0;
-         this.size = 0;
-     }
+     public double balance;
      
-     public void addSavingsAcc() throws ParseException
+     public Savings(double balance, int date, int numWithdrawals) throws ParseException
+     {
+         super(balance, date, numWithdrawals);
+         this.savingsAccount = new Accounts[10];
+         this.getNumWithdrawals();
+         this.getSize();
+     }
+
+     /*public void addSavingsAcc() throws ParseException
      {
          Scanner in = null;
          in = new Scanner(System.in);
          
          System.out.print("Enter Balance:");
-         balance = in.nextDouble();
+         this.balance = in.nextDouble();
 
          System.out.print("Enter Number of withdrawals:");
          numWithdrawals = in.nextInt();
@@ -38,5 +40,5 @@
          //NumberFormat money = NumberFormat.getCurrencyInstance();
          System.out.println("Balance: " + this.balance);
          System.out.println("Recipient: " + this.numWithdrawals);      
-     }
+     }*/
  }

@@ -9,8 +9,11 @@ import javax.swing.BoxLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +33,7 @@ import javax.swing.JMenuItem;
     JPanel centerPanel;
     JTextField deposit;
     JTextField withdraw;
-    JTextField balance;
+    JTextField bal;
     JTextField max;
     JTextField min;
     JTextField maxD;
@@ -49,6 +52,7 @@ import javax.swing.JMenuItem;
     JMenu Account;
     JMenuItem Current;
     JMenuItem Savings;
+    Savings s;
     
     int secondsPassed = 0;
     Timer timer = new Timer();
@@ -93,7 +97,7 @@ import javax.swing.JMenuItem;
             public void actionPerformed(ActionEvent e) 
             {
             initBal.setVisible(true);
-            balance.setVisible(true);
+            bal.setVisible(true);
             initialBalanceCurr.setVisible(true);
             initialBalanceSave.setVisible(false);
             }
@@ -105,9 +109,16 @@ import javax.swing.JMenuItem;
             public void actionPerformed(ActionEvent e) 
             {
             initBal.setVisible(true);
-            balance.setVisible(true);
+            bal.setVisible(true);
             initialBalanceSave.setVisible(true);
             initialBalanceCurr.setVisible(false);
+                try 
+                {
+                    s = new Savings(0.0, 0, 0);
+                } catch (ParseException ex) 
+                {
+                    Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
@@ -129,10 +140,31 @@ import javax.swing.JMenuItem;
 
            leftPanel.add(Box.createRigidArea(new Dimension(5,50)));
            initBal = new JLabel("Please enter initial Balance of account");
-           balance = new JTextField(10);
+           bal = new JTextField(10);
+           
            initialBalanceCurr = new JButton("Submit");
+           initialBalanceCurr.addActionListener(new ActionListener()
+           {
+           public void actionPerformed(ActionEvent e) 
+                {
+                String strBal = bal.getText();
+                double dubBal = Double.parseDouble(strBal);
+                s.balance = dubBal;
+                System.out.println(s.balance);
+                }
+           });
            initialBalanceSave = new JButton("Submit");
-           balance.setMaximumSize(balance.getPreferredSize());
+           initialBalanceSave.addActionListener(new ActionListener()
+           {
+           public void actionPerformed(ActionEvent e) 
+                {
+                String strBal = bal.getText();
+                double dubBal = Double.parseDouble(strBal);
+                s.balance = dubBal;
+                System.out.println(s.balance);
+                }
+           });
+           bal.setMaximumSize(bal.getPreferredSize());
            simulate = new JButton("Start Simulation");
            simulate.addActionListener(new ActionListener() 
             {
@@ -153,7 +185,7 @@ import javax.swing.JMenuItem;
            
            leftPanel.add(initBal);
            leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
-           leftPanel.add(balance);      
+           leftPanel.add(bal);      
            leftPanel.add(Box.createRigidArea(new Dimension(5,10)));
            leftPanel.add(initialBalanceCurr);
            leftPanel.add(initialBalanceSave);
@@ -163,7 +195,7 @@ import javax.swing.JMenuItem;
            leftPanel.add(stopSim);
            leftPanel.setBackground(Color.YELLOW);
            initBal.setVisible(false);
-           balance.setVisible(false);
+           bal.setVisible(false);
            initialBalanceCurr.setVisible(false);
            initialBalanceSave.setVisible(false);
            
