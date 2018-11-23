@@ -3,45 +3,20 @@ import java.text.ParseException;
 
 
 
-public class Accounts 
+public class Accounts extends MyControlPanel
 {
-    private double balance;
-    private int date;
-    private int numWithdrawals = 0;
-    private double interest;
-    private int size = 0;
     
+    public static Savings mySavings; 
     
-
-    public Accounts(double balance, int date, int numWithdrawals)throws ParseException
-    {
-    this.balance = balance;
-    this.date = date;
-    this.numWithdrawals = numWithdrawals;
-    }
-    
-    public double getBalance()
-    {
-        return this.balance;
-    }
-    
-    public double getDate()
-    {
-        return this.date;
-    }
-    
-    public double getNumWithdrawals()
-    {
-        return this.numWithdrawals;
-    }
-    public int getSize()
-    {
-        return this.size;
-    }
     public static void main(String[] args) throws ParseException 
     {
+        mySavings = new Savings(0, "", 0);
         MyFrame frame = new MyFrame();
-
+        System.out.println(mySavings.getBalance());
+    }
     
+    public void setBalance()
+    {
+        mySavings.setBalance();
     }
 }

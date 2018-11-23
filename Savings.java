@@ -6,17 +6,37 @@
 
  public class Savings extends Accounts
  {
-     private Accounts[] savingsAccount;
+    
      
      public double balance;
+     public String date;
+     public int numWithdrawals;
      
-     public Savings(double balance, int date, int numWithdrawals) throws ParseException
+     public Savings(double enteredBal, String simDate, int withdrawals) throws ParseException
      {
-         super(balance, date, numWithdrawals);
-         this.savingsAccount = new Accounts[10];
-         this.getNumWithdrawals();
-         this.getSize();
+        this.balance = enteredBal;
+        this.date = simDate;
+        this.numWithdrawals = withdrawals;
      }
+     
+     public double getBalance()
+     {
+         return this.balance;
+     }
+     public void setBal(double b)
+     {
+         this.balance = b;
+     }
+     
+     public String getDate()
+     {
+         return this.date;
+     }
+     
+     public int getNumWithdrawals()
+    {
+        return this.numWithdrawals;
+    }
 
      /*public void addSavingsAcc() throws ParseException
      {

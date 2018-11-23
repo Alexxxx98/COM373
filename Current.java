@@ -5,13 +5,35 @@ import java.text.ParseException;
     
  public class Current extends Accounts
  {
-     private Accounts[] currentAccount;
+    private double balance = 0;
+    private String date = "";
+    private int numWithdrawals = 0;
+    //private double interest;
      
-     public Current(double balance, int numWithdrawals)throws ParseException
+     public Current(double enteredBal, String simDate, int withdrawals) throws ParseException
      {
-         super(balance, numWithdrawals);
-         this.currentAccount = new Accounts[100];
-         this.numWithdrawals = 0;
-         
+         //super(balance, date, numWithdrawals);
+        this.balance = enteredBal;
+        this.date = simDate;
+        this.numWithdrawals = withdrawals;
      }
+     
+     public double getBalance()
+    {
+        return this.balance;
+    }
+     
+    public void setBalance(double enteredBal)
+    {
+        this.balance = enteredBal;
+    }
+    public String getDate()
+    {
+        return this.date;
+    }
+    
+    public int getWithdrawals()
+    {
+        return this.numWithdrawals;
+    }
  }

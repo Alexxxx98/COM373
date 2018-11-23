@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -50,10 +51,13 @@ import javax.swing.JMenuItem;
     JButton showBal;
     JMenuBar theMenu;
     JMenu Account;
-    JMenuItem Current;
-    JMenuItem Savings;
-    Savings s;
+    JMenuItem CurrentItem;
+    JMenuItem SavingsItem;
+    String strBal;
+    //public double dubBal;
     
+    int month = 11;
+    int year = 2018;
     int secondsPassed = 0;
     Timer timer = new Timer();
     MyControlPanel c;
@@ -61,10 +65,63 @@ import javax.swing.JMenuItem;
     {
         public void run()
         {
+            if(secondsPassed != 0 && secondsPassed % 5 == 0)
+            {
+                month++;
+
+                if(month > 12)
+                {
+                    year++;
+                    month=1;
+                }
+                if(this.decideTransType() % 2 == 0)
+                {
+                System.out.println("Even");
+                System.out.println(this.decideRandomAmount());
+                this.depositSavings();
+                }else
+                {
+                System.out.println("Odd");
+                System.out.println(this.decideRandomAmount());
+                this.withdrawSavings();
+                }
+            }
             secondsPassed++;
-            System.out.println("Seconds Passed: " + secondsPassed); 
+            System.out.println("months : " + month); 
+            System.out.println("year : " + year); 
+            System.out.println("");
+
         }
+                private int decideTransType() 
+                {
+                Random currSave = new Random();
+                int tranMeth = currSave.nextInt(101);
+                return tranMeth;
+                }
+        
+                private int decideRandomAmount()
+                {
+                Random randAmount = new Random();
+                int intAmount = randAmount.nextInt(1001);
+                return intAmount;
+                }
+                private void withdrawSavings()
+                {
+                    if(100 - this.decideRandomAmount() < 100)
+                    {
+                    System.out.println("error");
+                    }else
+                    {
+                    System.out.println("withdraw successful");
+                    }
+                }
+                private void depositSavings()
+                {
+                System.out.println("Deposit successful");
+                }
     };
+
+
     public void start()
         {
             timer.scheduleAtFixedRate(task, 1000, 1000);
@@ -91,8 +148,8 @@ import javax.swing.JMenuItem;
         theMenu = new JMenuBar();
         Account = new JMenu("Account Type");
 
-        Current = new JMenuItem("Current");
-        Current.addActionListener(new ActionListener()
+        CurrentItem = new JMenuItem("Current");
+        CurrentItem.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) 
             {
@@ -103,8 +160,8 @@ import javax.swing.JMenuItem;
             }
         });
 
-        Savings = new JMenuItem("Savings");
-        Savings.addActionListener(new ActionListener()
+        SavingsItem = new JMenuItem("Savings");
+        SavingsItem.addActionListener(new ActionListener()
         {  
             public void actionPerformed(ActionEvent e) 
             {
@@ -112,19 +169,12 @@ import javax.swing.JMenuItem;
             bal.setVisible(true);
             initialBalanceSave.setVisible(true);
             initialBalanceCurr.setVisible(false);
-                try 
-                {
-                    s = new Savings(0.0, 0, 0);
-                } catch (ParseException ex) 
-                {
-                    Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
         });
         
 
-        Account.add(Current);
-        Account.add(Savings);
+        Account.add(CurrentItem);
+        Account.add(SavingsItem);
 
         theMenu.add(Account);
         topPanel.add(theMenu, BorderLayout.WEST);
@@ -147,10 +197,7 @@ import javax.swing.JMenuItem;
            {
            public void actionPerformed(ActionEvent e) 
                 {
-                String strBal = bal.getText();
-                double dubBal = Double.parseDouble(strBal);
-                s.balance = dubBal;
-                System.out.println(s.balance);
+                
                 }
            });
            initialBalanceSave = new JButton("Submit");
@@ -158,10 +205,11 @@ import javax.swing.JMenuItem;
            {
            public void actionPerformed(ActionEvent e) 
                 {
+                
                 String strBal = bal.getText();
                 double dubBal = Double.parseDouble(strBal);
-                s.balance = dubBal;
-                System.out.println(s.balance);
+                //mySavings.setBalance(dubBal);
+                
                 }
            });
            bal.setMaximumSize(bal.getPreferredSize());
@@ -170,8 +218,8 @@ import javax.swing.JMenuItem;
             {
                 public void actionPerformed(ActionEvent e) 
                 {   
-                    c = new MyControlPanel();
-                    c.start();
+                c = new MyControlPanel();
+                c.start();
                 }
             });
            stopSim = new JButton("Stop Simulation");
