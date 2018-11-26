@@ -1,28 +1,36 @@
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Timers extends MyControlPanel
 {
+    
+    double a;
     int month = 11;
     int year = 2018;
     int secondsPassed = 0;
     Timer currTimer = new Timer();
     Timer saveTimer = new Timer();
+    public Current[]currTrans;
+    ArrayList<Object> listOfObjects = new ArrayList<Object>();
     
-    TimerTask currTask = new TimerTask()
+    
+    TimerTask currTask = new TimerTask() 
     {
         public void run()
         {
             if(secondsPassed != 0 && secondsPassed % 5 == 0)
             {
+                Current[]currTrans = null;
+                int size = 0;
                 month++;
-                double a = 15;
-                c1.balance = c1.balance + a;
-                System.out.println(c1.balance);
-                
+
                 if(month > 12)
                 {
                     year++;
@@ -31,26 +39,49 @@ public class Timers extends MyControlPanel
                 if(this.decideTransType() % 2 == 0)
                 {
                 System.out.println("Even");
-                System.out.println(this.decideRandomAmount());
-                this.depositSavings();
+                double add = this.decideRandomAmount();
+                System.out.println(add);
+                
+                c1.balance = c1.balance + add;
+                System.out.println(c1.balance);
+                //a = c1.balance;
+
+                    try {
+                        currTrans[size] = new Current(c1.balance, "", 0);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Timers.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+               size++;
+               for (int i=0; i<currTrans.length ; i++)
+                {
+                    System.out.println(currTrans[i]);
+                }
                 }else
                 {
                 System.out.println("Odd");
-                System.out.println(this.decideRandomAmount());
-                this.withdrawSavings();
+                double minus = this.decideRandomAmount();
+                System.out.println(minus);
+                c1.balance = c1.balance - minus;
+                System.out.println(c1.balance);
+                
                 }
+                
+                
+                
+                
             }
             secondsPassed++;
             System.out.println("months : " + month); 
             System.out.println("year : " + year); 
             System.out.println("");
-
-        }
-                private double decideTransType() 
+            
+        }  
+        private double decideTransType() 
                 {
                 Random currSave = new Random();
-                double tranMeth = currSave.nextInt(101);
-                return tranMeth;
+                int tranMeth = currSave.nextInt(101);
+                double d = (double)tranMeth;
+                return d;
                 }
         
                 private double decideRandomAmount()
@@ -59,21 +90,7 @@ public class Timers extends MyControlPanel
                 double intAmount = randAmount.nextInt(1001);
                 return intAmount;
                 }
-                private void withdrawSavings()
-                {
-                    if(100 - this.decideRandomAmount() < 100)
-                    {
-                    System.out.println("error");
-                    }else
-                    {
-                    System.out.println("withdraw successful");
-                    }
-                }
-                private void depositSavings()
-                {
-                c1.balance = c1.balance + this.decideRandomAmount();
-                System.out.println(c1.balance);
-                }
+                
     };
 
     TimerTask saveTask = new TimerTask()
@@ -83,9 +100,7 @@ public class Timers extends MyControlPanel
             if(secondsPassed != 0 && secondsPassed % 5 == 0)
             {
                 month++;
-                double a = 15;
-                c1.balance = c1.balance + a;
-                System.out.println(c1.balance);
+
                 if(month > 12)
                 {
                     year++;
@@ -94,47 +109,39 @@ public class Timers extends MyControlPanel
                 if(this.decideTransType() % 2 == 0)
                 {
                 System.out.println("Even");
-                System.out.println(this.decideRandomAmount());
-                this.depositSavings();
+                double add = this.decideRandomAmount();
+                System.out.println(add);
+                
+                s1.balance = s1.balance + add;
+                System.out.println(s1.balance);
                 }else
                 {
                 System.out.println("Odd");
-                System.out.println(this.decideRandomAmount());
-                this.withdrawSavings();
+                double minus = this.decideRandomAmount();
+                System.out.println(minus);
+                s1.balance = s1.balance - minus;
+                System.out.println(s1.balance);
                 }
             }
             secondsPassed++;
             System.out.println("months : " + month); 
             System.out.println("year : " + year); 
             System.out.println("");
-
-        }
-                private int decideTransType() 
+            
+        }  
+        private double decideTransType() 
                 {
                 Random currSave = new Random();
                 int tranMeth = currSave.nextInt(101);
-                return tranMeth;
+                double d = (double)tranMeth;
+                return d;
                 }
         
-                private int decideRandomAmount()
+                private double decideRandomAmount()
                 {
                 Random randAmount = new Random();
-                int intAmount = randAmount.nextInt(1001);
+                double intAmount = randAmount.nextInt(1001);
                 return intAmount;
-                }
-                private void withdrawSavings()
-                {
-                    if(100 - this.decideRandomAmount() < 100)
-                    {
-                    System.out.println("error");
-                    }else
-                    {
-                    System.out.println("withdraw successful");
-                    }
-                }
-                private void depositSavings()
-                {
-                System.out.println("Deposit successful");
                 }
     };
     
