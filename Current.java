@@ -10,7 +10,7 @@ import java.text.ParseException;
     private int numWithdrawals;
     //private double interest;
      
-     public Current(double enteredBal, String simDate, int withdrawals) throws ParseException
+     public Current(double enteredBal, String simDate, int withdrawals) //throws ParseException
      {
         this.balance = enteredBal;
         this.date = simDate;

@@ -13,7 +13,7 @@ public class MyFrame extends JFrame
     {
         
     this.setTitle("Account Simulation");
-    this.setSize(1000,600);
+    this.setSize(1400,800);
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -25,6 +25,7 @@ public class MyFrame extends JFrame
     main.add(new MyDrawingPanel());
    
     this.add(main);
+    this.setBackground(Color.yellow);
     this.setVisible(true);
     }
 }

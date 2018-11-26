@@ -10,7 +10,7 @@
      public String date;
      public int numWithdrawals;
      
-     public Savings(double enteredBal, String simDate, int withdrawals) throws ParseException
+     public Savings(double enteredBal, String simDate, int withdrawals) //throws ParseException
      {
         this.balance = enteredBal;
         this.date = simDate;

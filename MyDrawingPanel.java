@@ -6,23 +6,29 @@ import java.awt.Dimension;
 public class MyDrawingPanel extends JPanel
 {
     JPanel leftPanel;
+    JPanel centerPanel;
+    JPanel rightPanel;
     JLabel upBal;
     JLabel transList;
     JLabel errors;
-    JTextField upBalance;
-    JTextArea trans;
+    public static JTextField upBalance;
+    public static JTextArea trans;
+    public static JScrollPane scrollPane;
     JTextArea error;
+    
+    public static Savings s1;
     
     public MyDrawingPanel()
     {
     setLayout(new BorderLayout());
     //this.add(getHeader(), BorderLayout.PAGE_START);
-    //this.add(getLeft(), BorderLayout.LINE_START);
-    this.add(getCenter(), BorderLayout.CENTER);
+    this.add(getLeft(), BorderLayout.LINE_START);
+    //this.add(getCenter(), BorderLayout.CENTER);
     //this.add(getRight(), BorderLayout.LINE_END);
+    this.setBackground(Color.YELLOW);
     }
     
-    protected JComponent getCenter()
+    protected JComponent getLeft()
     {
     
     leftPanel = new JPanel();
@@ -35,15 +41,15 @@ public class MyDrawingPanel extends JPanel
     leftPanel.add(upBalance);
     
     transList = new JLabel("List of Transactions");
-    trans = new JTextArea(10,15);
+    trans = new JTextArea(10,30);
     trans.setLineWrap(true);
     trans.setWrapStyleWord(true);
-    JScrollPane scrollPane = new JScrollPane(trans);
+    scrollPane = new JScrollPane(trans);
     leftPanel.add(transList);
     leftPanel.add(scrollPane);
     
     errors = new JLabel("Error Messages Produced");
-    error = new JTextArea(10,15);
+    error = new JTextArea(10,30);
     error.setLineWrap(true);
     error.setWrapStyleWord(true);
     JScrollPane scrollPane2 = new JScrollPane(error);
@@ -53,4 +59,19 @@ public class MyDrawingPanel extends JPanel
     leftPanel.setBackground(Color.YELLOW);
     return leftPanel;
     }
+    
+    /*protected JComponent getCenter()
+    {
+        centerPanel = new JPanel();
+        leftPanel.setBackground(Color.YELLOW);
+        return centerPanel;
+    }
+    
+    protected JComponent getRight()
+    {
+        rightPanel = new JPanel();
+        rightPanel.setBackground(Color.YELLOW);
+        return rightPanel;
+    }*/
+    
 }

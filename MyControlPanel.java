@@ -20,10 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 
     public class MyControlPanel extends JPanel
@@ -134,36 +136,32 @@ import javax.swing.JMenuItem;
            {
            public void actionPerformed(ActionEvent e) 
                 {
-                double dubBal = Double.parseDouble(bal.getText()); 
-                
-                try
-                {
-                    c1 = new Current(dubBal, "", 0); 
-                }catch (ParseException ex) 
-                {                   
-                   Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
+                double dubBal = Double.parseDouble(bal.getText());
+                    if(dubBal >= 1)
+                    {
+                    c1 = new Current(dubBal, "", 0);
+                    }else
+                    {
+                    bal.setText("");
+                    JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid balance.");
+                    }
                 }
-                    System.out.println(c1.balance);
-                } 
-                
            });
            initialBalanceSave = new JButton("Submit");
            initialBalanceSave.addActionListener(new ActionListener()
            {
            public void actionPerformed(ActionEvent e) 
                 {
-                double dubBal = Double.parseDouble(bal.getText()); 
-                
-                try
-                {
-                    s1 = new Savings(dubBal, "", 0); 
-                }catch (ParseException ex) 
-                {                   
-                   Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
+                double dubBal = Double.parseDouble(bal.getText());
+                    if(dubBal >= 100)
+                    {
+                    s1 = new Savings(dubBal, "", 0);
+                    }else
+                    {
+                    bal.setText("");
+                    JOptionPane.showMessageDialog(new JFrame(), "Please enter a valid balance.");
+                    }
                 }
-                    System.out.println(s1.balance);
-                } 
-               
            });
            bal.setMaximumSize(bal.getPreferredSize());
            currSimulate = new JButton("Start Simulation");
@@ -267,7 +265,9 @@ import javax.swing.JMenuItem;
         protected JComponent getCenter()
         {
         centerPanel = new JPanel();
+    
         centerPanel.setBackground(Color.YELLOW);
+        
         return centerPanel;
         }
 }
