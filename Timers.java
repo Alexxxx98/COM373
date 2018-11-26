@@ -10,7 +10,6 @@ public class Timers extends MyControlPanel
     int year = 2018;
     int secondsPassed = 0;
     Timer currTimer = new Timer();
-
     Timer saveTimer = new Timer();
     
     TimerTask currTask = new TimerTask()
@@ -21,6 +20,7 @@ public class Timers extends MyControlPanel
             {
                 month++;
                 double a = 15;
+                c1.balance = c1.balance + a;
                 System.out.println(c1.balance);
                 
                 if(month > 12)
@@ -46,17 +46,17 @@ public class Timers extends MyControlPanel
             System.out.println("");
 
         }
-                private int decideTransType() 
+                private double decideTransType() 
                 {
                 Random currSave = new Random();
-                int tranMeth = currSave.nextInt(101);
+                double tranMeth = currSave.nextInt(101);
                 return tranMeth;
                 }
         
-                private int decideRandomAmount()
+                private double decideRandomAmount()
                 {
                 Random randAmount = new Random();
-                int intAmount = randAmount.nextInt(1001);
+                double intAmount = randAmount.nextInt(1001);
                 return intAmount;
                 }
                 private void withdrawSavings()
@@ -71,7 +71,8 @@ public class Timers extends MyControlPanel
                 }
                 private void depositSavings()
                 {
-                System.out.println("Deposit successful");
+                c1.balance = c1.balance + this.decideRandomAmount();
+                System.out.println(c1.balance);
                 }
     };
 

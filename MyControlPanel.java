@@ -57,8 +57,8 @@ import javax.swing.JMenuItem;
     JMenuItem SavingsItem;
     String strBal;
     Timers c;
-    Savings s1 = null;
-    Current c1;
+    public static Savings s1;
+    public static Current c1;
 
         public MyControlPanel()
         {

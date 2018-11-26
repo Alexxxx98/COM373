@@ -3,16 +3,15 @@ import java.text.ParseException;
 
 
     
- public class Current extends Accounts
+ public class Current extends MyControlPanel
  {
-    private double balance = 0;
-    private String date = "";
-    private int numWithdrawals = 0;
+    public double balance;
+    private String date;
+    private int numWithdrawals;
     //private double interest;
      
      public Current(double enteredBal, String simDate, int withdrawals) throws ParseException
      {
-         //super(balance, date, numWithdrawals);
         this.balance = enteredBal;
         this.date = simDate;
         this.numWithdrawals = withdrawals;

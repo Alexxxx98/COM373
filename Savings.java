@@ -1,10 +1,8 @@
 
  import java.text.ParseException;
- import java.util.Arrays;
- import java.util.Scanner;
 
 
- public class Savings extends Accounts
+ public class Savings extends MyControlPanel
  {
     
      

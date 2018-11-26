@@ -29,5 +29,4 @@ public class Graph extends JPanel
         g.fillOval(x, y, 3, 3);
 
     }
-
 }
