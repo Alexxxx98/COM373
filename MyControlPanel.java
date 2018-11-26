@@ -46,91 +46,20 @@ import javax.swing.JMenuItem;
     JLabel minDate;
     JButton initialBalanceCurr;
     JButton initialBalanceSave;
-    JButton simulate;
-    JButton stopSim;
+    JButton currSimulate;
+    JButton saveSimulate;
+    JButton currStopSim;
+    JButton saveStopSim;
     JButton showBal;
     JMenuBar theMenu;
     JMenu Account;
     JMenuItem CurrentItem;
     JMenuItem SavingsItem;
     String strBal;
-    //public double dubBal;
-    
-    int month = 11;
-    int year = 2018;
-    int secondsPassed = 0;
-    Timer timer = new Timer();
-    MyControlPanel c;
-    TimerTask task = new TimerTask()
-    {
-        public void run()
-        {
-            if(secondsPassed != 0 && secondsPassed % 5 == 0)
-            {
-                month++;
+    Timers c;
+    Savings s1 = null;
+    Current c1;
 
-                if(month > 12)
-                {
-                    year++;
-                    month=1;
-                }
-                if(this.decideTransType() % 2 == 0)
-                {
-                System.out.println("Even");
-                System.out.println(this.decideRandomAmount());
-                this.depositSavings();
-                }else
-                {
-                System.out.println("Odd");
-                System.out.println(this.decideRandomAmount());
-                this.withdrawSavings();
-                }
-            }
-            secondsPassed++;
-            System.out.println("months : " + month); 
-            System.out.println("year : " + year); 
-            System.out.println("");
-
-        }
-                private int decideTransType() 
-                {
-                Random currSave = new Random();
-                int tranMeth = currSave.nextInt(101);
-                return tranMeth;
-                }
-        
-                private int decideRandomAmount()
-                {
-                Random randAmount = new Random();
-                int intAmount = randAmount.nextInt(1001);
-                return intAmount;
-                }
-                private void withdrawSavings()
-                {
-                    if(100 - this.decideRandomAmount() < 100)
-                    {
-                    System.out.println("error");
-                    }else
-                    {
-                    System.out.println("withdraw successful");
-                    }
-                }
-                private void depositSavings()
-                {
-                System.out.println("Deposit successful");
-                }
-    };
-
-
-    public void start()
-        {
-            timer.scheduleAtFixedRate(task, 1000, 1000);
-        }
-    public void end()
-    {
-        timer.cancel();
-    }
-   
         public MyControlPanel()
         {
         setLayout(new BorderLayout());
@@ -140,7 +69,7 @@ import javax.swing.JMenuItem;
         this.add(getRight(), BorderLayout.LINE_END);
         //this.add(getBottom(), BorderLayout.PAGE_END); 
         }
-        
+               
         protected JComponent getHeader() 
         {
         topPanel = new JPanel();
@@ -157,6 +86,10 @@ import javax.swing.JMenuItem;
             bal.setVisible(true);
             initialBalanceCurr.setVisible(true);
             initialBalanceSave.setVisible(false);
+            currSimulate.setVisible(true);
+            saveSimulate.setVisible(false);
+            currStopSim.setVisible(true);
+            saveStopSim.setVisible(false);
             }
         });
 
@@ -169,6 +102,10 @@ import javax.swing.JMenuItem;
             bal.setVisible(true);
             initialBalanceSave.setVisible(true);
             initialBalanceCurr.setVisible(false);
+            currSimulate.setVisible(false);
+            saveSimulate.setVisible(true);
+            currStopSim.setVisible(false);
+            saveStopSim.setVisible(true);
             }
         });
         
@@ -197,37 +134,73 @@ import javax.swing.JMenuItem;
            {
            public void actionPerformed(ActionEvent e) 
                 {
+                double dubBal = Double.parseDouble(bal.getText()); 
                 
+                try
+                {
+                    c1 = new Current(dubBal, "", 0); 
+                }catch (ParseException ex) 
+                {                   
+                   Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                    System.out.println(c1.balance);
+                } 
+                
            });
            initialBalanceSave = new JButton("Submit");
            initialBalanceSave.addActionListener(new ActionListener()
            {
            public void actionPerformed(ActionEvent e) 
                 {
+                double dubBal = Double.parseDouble(bal.getText()); 
                 
-                String strBal = bal.getText();
-                double dubBal = Double.parseDouble(strBal);
-                //mySavings.setBalance(dubBal);
-                
+                try
+                {
+                    s1 = new Savings(dubBal, "", 0); 
+                }catch (ParseException ex) 
+                {                   
+                   Logger.getLogger(MyControlPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                    System.out.println(s1.balance);
+                } 
+               
            });
            bal.setMaximumSize(bal.getPreferredSize());
-           simulate = new JButton("Start Simulation");
-           simulate.addActionListener(new ActionListener() 
+           currSimulate = new JButton("Start Simulation");
+           currSimulate.addActionListener(new ActionListener() 
             {
+                //Timers myTimer = new Timers();
                 public void actionPerformed(ActionEvent e) 
                 {   
-                c = new MyControlPanel();
-                c.start();
+                c = new Timers();
+                c.currStart();
                 }
             });
-           stopSim = new JButton("Stop Simulation");
-           stopSim.addActionListener(new ActionListener() 
+           saveSimulate = new JButton("Start Simulation");
+           saveSimulate.addActionListener(new ActionListener() 
+            {
+                //Timers myTimer = new Timers();
+                public void actionPerformed(ActionEvent e) 
+                {   
+                c = new Timers();
+                c.saveStart();
+                }
+            });
+           
+           currStopSim = new JButton("Stop Simulation");
+           currStopSim.addActionListener(new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
                 {   
-                    c.end();
+                c.currEnd();
+                }
+            });
+           saveStopSim = new JButton("Stop Simulation");
+           saveStopSim.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent e) 
+                {   
+                c.saveEnd();
                 }
             });
            
@@ -238,14 +211,21 @@ import javax.swing.JMenuItem;
            leftPanel.add(initialBalanceCurr);
            leftPanel.add(initialBalanceSave);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
-           leftPanel.add(simulate);
+           leftPanel.add(currSimulate);
+           leftPanel.add(saveSimulate);
            leftPanel.add(Box.createRigidArea(new Dimension(5,15)));
-           leftPanel.add(stopSim);
+           leftPanel.add(currStopSim);
+           leftPanel.add(saveStopSim);
            leftPanel.setBackground(Color.YELLOW);
            initBal.setVisible(false);
            bal.setVisible(false);
            initialBalanceCurr.setVisible(false);
            initialBalanceSave.setVisible(false);
+           currSimulate.setVisible(false);
+           saveSimulate.setVisible(false);
+           currStopSim.setVisible(false);
+           saveStopSim.setVisible(false);
+           
            
            
            return leftPanel;
