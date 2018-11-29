@@ -9,8 +9,9 @@ import java.util.TimerTask;
 
 public class Timers extends MyControlPanel
 {
-    
+
     double a;
+    //int i = 1;
     double minus;
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
     int size = 0;
@@ -22,10 +23,11 @@ public class Timers extends MyControlPanel
     int secondsPassed = 0;
     Timer currTimer = new Timer();
     Timer saveTimer = new Timer();
-     Accounts[]currTrans = new Accounts[100];
+     public  Accounts[]currTrans = new Accounts[15];
     private Accounts[]saveTrans = new Accounts[100];
     //private int[] balances = new int[100];
-    public static double[] balances = new double[10];
+    public double[] balances = new double[10];
+    //double b = currTrans[size].balance;
     
     
     
@@ -33,6 +35,7 @@ public class Timers extends MyControlPanel
     {
         public void run()
         {
+            
             if(secondsPassed != 0 && secondsPassed % 3 == 0) 
             {
                 
@@ -51,9 +54,7 @@ public class Timers extends MyControlPanel
                 
                 if(this.decideTransType() % 2 == 0)
                 {
-                System.out.println("Even");
                 double add = this.decideRandomAmount();
-                System.out.println(add);
                     if(add > 500)
                     {
                     c1.balance = c1.balance + add + 10.0;
@@ -61,14 +62,17 @@ public class Timers extends MyControlPanel
                     {
                     c1.balance = c1.balance + add;
                     }
-                System.out.println(c1.balance);
+                //System.out.println(c1.balance);
                 balances[size] = c1.balance;
                 currTrans[size] = new Accounts(c1.balance, add, strDate, 0);
                 String formatBalance = formatter.format(currTrans[size].balance);
                 String formatChange = formatter.format(currTrans[size].balChange);
                 //System.out.println(currTrans[size].balance + " +" + currTrans[size].balChange + " " + currTrans[size].date);
                 MyDrawingPanel.trans.append("Balance: " + formatBalance + "   Change: +" + formatChange + "    Date: " + currTrans[size].date + "\r\n");
-             
+                if(size > 0)
+                    {
+                    this.sequentialSearch();
+                    }
                 size++;
                 //System.out.println(Arrays.toString(balances));
                 
@@ -117,19 +121,23 @@ public class Timers extends MyControlPanel
                     if(a >= -1000)
                     {
                     c1.balance = c1.balance - minus;
-                    System.out.println(c1.balance);
+                    //System.out.println(c1.balance);
                     balances[size] = c1.balance;
                     currTrans[size] = new Accounts(c1.balance, minus, strDate, 0);
                     String formatBalance = formatter.format(currTrans[size].balance);
                     String formatChange = formatter.format(currTrans[size].balChange);
                     MyDrawingPanel.trans.append("Balance: " + formatBalance + " Change: -" + formatChange + " Date: " + currTrans[size].date + "\r\n");
+                    if(size > 0)
+                    {
+                    this.sequentialSearch();
+                    }
                     size++;
                     }else
                     {
                         throw new Errors.OverdraftException();
                     }
                 }
-                public void insertionSort1(double[] balances)
+                public void insertionSort()
                 {
                 int i, slot, size1;
                 double current;
@@ -145,9 +153,9 @@ public class Timers extends MyControlPanel
                         }
                     balances[slot] = current;
                     }
-                    System.out.println(Arrays.toString(balances));
+                    System.out.println("Lowest balance is " + balances[0]);
                 }
-                public void insertionSort(Accounts[] currTrans)
+                public void insertionSort1()
                 {
                 int i, slot, size1;
                 double current;
@@ -162,9 +170,34 @@ public class Timers extends MyControlPanel
                         slot--;
                         }
                     currTrans[slot].balance = current;
+                    System.out.println("Lowest balance is " + currTrans[slot].balance);
                     }
-                    System.out.println(Arrays.toString(currTrans));
+                    String strBal = Double.toString(currTrans[0].balance);
+                    max.setText(strBal);
+                    //System.out.println("Lowest balance is " + currTrans[size].balance);
                 }
+                public void sequentialSearch()
+                {
+                int i;
+                int slot;
+                int length = currTrans.length;
+                
+                    for(i=1; i < length; i++)
+                    {
+                        double current = currTrans[i].balance;
+                        slot = i;
+                        //int t = slot - 1;
+                        while((slot > 0) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1))
+                        { 
+                        currTrans[slot] = currTrans[slot-1] ;
+                        slot--;      
+                        }
+                        currTrans[slot].balance = current;
+                        
+                    }System.out.println("Lowest balance is " + currTrans[0].balance);
+                }
+                
+                    
     };
 
     TimerTask saveTask = new TimerTask()
@@ -293,21 +326,42 @@ public class Timers extends MyControlPanel
     {
         saveTimer.cancel();
     }
-    public boolean sequentialSearch(Comparable [] searchSave, Accounts target)
+    /*public void sequentialSearch()
                 {
-                boolean found = false;
-                int i = 0 ;
-                while (!found && i < 20)
-                {
-                if (searchSave[i].compareTo(target) == 0)
-                {
-                found = true ;
-                }
-                i++ ;
-                }
-                return found ;
-                }
-                public void insertionSort(Accounts[] currTrans)
+                int z;
+                int slot, t;
+                int b = i - 1;
+                int length = currTrans.length;
+                
+   
+                            //slot = i;
+                            if (currTrans[i].compareTo(currTrans[b]) == 1)
+                            {
+                                System.out.println("Balance is greater");
+                                
+                            }else
+                            {
+                                
+                                for(z=1; z < length; z++)
+                                {
+                                int y = z -1;
+                                slot = z;
+                                t = slot -1;// Starts with 1st element
+                                    while((slot > 0) && (z < size) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1))
+                                    {
+                                    balances[slot] = balances[slot-1] ;
+                                    slot--;
+                                    }
+                                }
+                                
+                                
+                                System.out.println("Lowest balance is " + currTrans[0].balance);
+                            }
+                            i++;
+                    
+                }*/
+                
+               /* public void insertionSort()
                 {
                 int i, slot, size1;
                 double current;
@@ -326,4 +380,24 @@ public class Timers extends MyControlPanel
                     System.out.println(Arrays.toString(currTrans));
                     max.setText(Arrays.toString(currTrans));
                 }
+                public void insertionSort1()
+                {
+                int i, slot, size1;
+                double current;
+                size1 = balances.length ;
+                    for(i=1; i < size1; i++)
+                    {
+                    current = balances[i];
+                    slot = i; // Starts with 1st element
+                        while((slot > 0)&&(balances[slot-1] > current))
+                        {
+                        balances[slot] = balances[slot-1] ;
+                        slot--;
+                        }
+                    balances[slot] = current;
+                    }
+                    String strBal = Double.toString(balances[0]);
+                    max.setText(strBal);
+                    System.out.println(Arrays.toString(balances));
+                }*/
 }
