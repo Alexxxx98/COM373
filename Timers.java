@@ -23,7 +23,7 @@ public class Timers extends MyControlPanel
     int secondsPassed = 0;
     Timer currTimer = new Timer();
     Timer saveTimer = new Timer();
-     public  Accounts[]currTrans = new Accounts[15];
+     public  Accounts[]currTrans = new Accounts[10];
     private Accounts[]saveTrans = new Accounts[100];
     //private int[] balances = new int[100];
     public double[] balances = new double[10];
@@ -36,7 +36,7 @@ public class Timers extends MyControlPanel
         public void run()
         {
             
-            if(secondsPassed != 0 && secondsPassed % 3 == 0) 
+            if(secondsPassed != 0 && secondsPassed % 2 == 0) 
             {
                 
                 
@@ -69,10 +69,10 @@ public class Timers extends MyControlPanel
                 String formatChange = formatter.format(currTrans[size].balChange);
                 //System.out.println(currTrans[size].balance + " +" + currTrans[size].balChange + " " + currTrans[size].date);
                 MyDrawingPanel.trans.append("Balance: " + formatBalance + "   Change: +" + formatChange + "    Date: " + currTrans[size].date + "\r\n");
-                if(size > 0)
-                    {
-                    this.sequentialSearch();
-                    }
+                //if(size > 0)
+                    //{
+                    //this.sequentialSearch();
+                    //}
                 size++;
                 //System.out.println(Arrays.toString(balances));
                 
@@ -127,10 +127,10 @@ public class Timers extends MyControlPanel
                     String formatBalance = formatter.format(currTrans[size].balance);
                     String formatChange = formatter.format(currTrans[size].balChange);
                     MyDrawingPanel.trans.append("Balance: " + formatBalance + " Change: -" + formatChange + " Date: " + currTrans[size].date + "\r\n");
-                    if(size > 0)
-                    {
-                    this.sequentialSearch();
-                    }
+                    //if(size > 0)
+                    //{
+                    //this.sequentialSearch();
+                    //}
                     size++;
                     }else
                     {
@@ -180,23 +180,44 @@ public class Timers extends MyControlPanel
                 {
                 int i;
                 int slot;
+                Accounts current;
                 int length = currTrans.length;
                 
-                    for(i=1; i < length; i++)
+                    for(i=0; i < length; i++)
                     {
-                        double current = currTrans[i].balance;
+                        current = currTrans[i];
                         slot = i;
                         //int t = slot - 1;
-                        while((slot > 0) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1))
+                        //while((slot > 0) && (currTrans[slot-1] > current) && (i != 0))
+                        while((slot > 0) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1) && (currTrans[slot] != null) && (i != 0))
                         { 
                         currTrans[slot] = currTrans[slot-1] ;
                         slot--;      
                         }
-                        currTrans[slot].balance = current;
+                        currTrans[slot] = current;
                         
                     }System.out.println("Lowest balance is " + currTrans[0].balance);
                 }
-                
+                /*public void selectionSort()
+                {
+                int i, size, look, smallestFound, toBeSwapped;
+                size = currTrans.length ;
+                    for(i=0; i < size; i++)
+                    {
+                    smallestFound = i ;
+                        for(look = i+1; look < size; look++)
+                        {
+                            if(currTrans[look] < currTrans[smallestFound])
+                            {
+                            // Need to record current ‘look’ as position of smallest found so far
+                            smallestFound = look ;
+                            }
+                        }
+                    // At this point we know where the smallest found is and need to swap
+                    // it with the value currently located at position i.
+                    swap(digits, smallestFound, i) ;
+                    }
+                }*/
                     
     };
 
@@ -326,41 +347,28 @@ public class Timers extends MyControlPanel
     {
         saveTimer.cancel();
     }
-    /*public void sequentialSearch()
+    public void sequentialSearch()
                 {
-                int z;
-                int slot, t;
-                int b = i - 1;
+                int i;
+                int slot;
+                Accounts current;
                 int length = currTrans.length;
                 
-   
-                            //slot = i;
-                            if (currTrans[i].compareTo(currTrans[b]) == 1)
-                            {
-                                System.out.println("Balance is greater");
-                                
-                            }else
-                            {
-                                
-                                for(z=1; z < length; z++)
-                                {
-                                int y = z -1;
-                                slot = z;
-                                t = slot -1;// Starts with 1st element
-                                    while((slot > 0) && (z < size) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1))
-                                    {
-                                    balances[slot] = balances[slot-1] ;
-                                    slot--;
-                                    }
-                                }
-                                
-                                
-                                System.out.println("Lowest balance is " + currTrans[0].balance);
-                            }
-                            i++;
-                    
-                }*/
-                
+                    for(i=1; i < length; i++)
+                    {
+                        current = currTrans[i];
+                        slot = i;
+                        //int t = slot - 1;
+                        //while((slot > 0) && (currTrans[slot-1] > current) && (i != 0))
+                        while((slot > 0) && (currTrans[slot].compareTo(currTrans[slot-1]) == -1))
+                        { 
+                        currTrans[slot] = currTrans[slot-1] ;
+                        slot--;      
+                        }
+                        currTrans[slot] = current;
+                        
+                    }System.out.println("Lowest balance is " + currTrans[0].balance);
+                }
                /* public void insertionSort()
                 {
                 int i, slot, size1;
